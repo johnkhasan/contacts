@@ -1,0 +1,15 @@
+{
+  "i18n-ally.sortKeys": true,
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.sourceLanguage": "uz-Latn-UZ",
+  "i18n-ally.displayLanguage": "uz-Latn-UZ",
+  "i18n-ally.localesPaths": [
+    "./locales/uz-Latn-UZ",
+    "./locales/uz-Cyrl-UZ",
+    "./locales/ru-RU",
+    "./locales/en"
+  ],
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.requireConfig": true
+}

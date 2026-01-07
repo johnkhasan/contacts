@@ -1,0 +1,43 @@
+name: PROD Deployment
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          command_timeout: 30m
+          script: |
+            set -e
+
+            echo "🚀 Starting deployment..."
+
+            (
+              export NVM_DIR="$HOME/.nvm"
+              [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+              
+              cd /var/www/das-uty-ai-front
+              git pull origin main
+              
+              # Uses version from .nvmrc (20)
+              nvm use 20
+              echo "📦 Using Node $(node -v)"
+              
+              npm ci --production=false
+              npm run generate
+            )
+
+            cd /var/www/das-uty-ai-front
+
+            echo "✅ Deployment completed!"
