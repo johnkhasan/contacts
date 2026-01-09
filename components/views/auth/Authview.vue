@@ -1,9 +1,5 @@
 <template>
   <div class="flex w-full h-full p-4 bg-surface-40 rounded-2xl border border-surface-30 shadow-auth-login font-geist">
-    <div class="flex-1 h-full">
-      <AuthCarousel />
-    </div>
-
     <div class="flex flex-1 items-center justify-center px-10">
       <div
         class="flex w-full flex-col gap-8 bg-surface-40 rounded-xl border border-surface-20 p-6 shadow-auth-login max-w-[600px]"
@@ -54,21 +50,6 @@
             </button>
           </el-form>
         </div>
-
-        <div class="flex w-full flex-col gap-6 items-center">
-          <div class="w-full flex justify-center gap-10">
-            <div v-for="(project, index) in projectList" :key="index" class="flex items-center gap-2">
-              <div :style="{ backgroundColor: project.bg, borderColor: project.border }"
-                class="rounded-md border-1 py-1 px-1.5 border">
-                <IconPlatform class="text-white" />
-              </div>
-              <span class="text-primary-color font-semibold text-sm">{{ $t(project.name) }}</span>
-            </div>
-          </div>
-          <div class="text-center w-full">
-            <span class="text-primary-300">{{ $t('auth.projectList') }}</span>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -111,25 +92,6 @@ const selectRoleFormRules: FormRules = {
   ]
 };
 const userRolesList = ref<AccountRoleDto[]>([])
-
-
-const projectList = [
-  {
-    name: "platform.libraAI",
-    bg: "#893DF3",
-    border: "#893DF3"
-  },
-  {
-    name: "platform.camera",
-    bg: "#3D89F3",
-    border: "#99C4FF"
-  },
-  {
-    name: "platform.helmet",
-    bg: "#0EC487",
-    border: "#45F1B7"
-  },
-]
 
 const form = reactive<LoginForm>({
   login: "",
