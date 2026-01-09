@@ -8,18 +8,13 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      link: [
-        // { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-        { rel: 'icon', type: 'image/png', href: '/favicon.png' },
-      ],
+      link: [{ rel: "icon", type: "image/png", href: "/favicon.png" }],
       meta: [
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { charset: 'utf-8' },
-        { name: 'format-detection', content: 'telephone=no' },
-        { name: 'og:title', content: 'DAS UTY AI' },
-        { name: 'og:description', content: 'AI Platform for railway freight automation' },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { charset: "utf-8" },
+        { name: "format-detection", content: "telephone=no" }
       ]
-    },
+    }
   },
 
   postcss: {
@@ -28,10 +23,6 @@ export default defineNuxtConfig({
       autoprefixer: {}
     }
   },
-
-  // modules: [
-  //   "nuxt-svgo"
-  // ],
 
   modules: ["nuxt-svgo", "@nuxtjs/i18n", "nuxt-echarts", "@pinia/nuxt"],
 
@@ -50,15 +41,15 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      NUXT_PUBLIC_API_BASE_URL: process.env.NUXT_PUBLIC_API_BASE_URL,
-    },
+      NUXT_PUBLIC_API_BASE_URL: process.env.NUXT_PUBLIC_API_BASE_URL
+    }
   },
 
   ssr: false,
 
   devServer: {
     host: "*",
-    port: 8080,
+    port: 8080
   },
 
   components: [
@@ -73,24 +64,11 @@ export default defineNuxtConfig({
       useCookie: true,
       cookieKey: "i18n_redirected",
       redirectOn: "root",
-      fallbackLocale: "uz",
+      fallbackLocale: "en",
       alwaysRedirect: true
     },
-    locales: [
-      {
-        code: "uz",
-        file: "uz-Latn-UZ/uz-Latn-UZ.json",
-        language: "uz-Latn-UZ"
-      },
-      {
-        code: "kril",
-        file: "uz-Cyrl-UZ/uz-Cyrl-UZ.json",
-        language: "uz-Cyrl-UZ"
-      },
-      { code: "ru", file: "ru-RU/ru-RU.json", language: "ru-RU" },
-      { code: "en", file: "en/en.json", language: "en" }
-    ],
-    defaultLocale: "uz",
+    locales: [{ code: "en", file: "en/en.json", language: "en" }],
+    defaultLocale: "en",
     langDir: "locales/"
   },
 
@@ -121,13 +99,12 @@ export default defineNuxtConfig({
     autoImportPath: "./assets/icons/",
     defaultImport: "component",
     svgoConfig: {
-      multipass: false, // Отключаем многоходовую оптимизацию
+      multipass: false,
       plugins: [
         {
           name: "preset-default",
           params: {
             overrides: {
-              // Отключаем ВСЕ плагины оптимизации
               removeDoctype: false,
               removeXMLProcInst: false,
               removeComments: false,
@@ -169,16 +146,8 @@ export default defineNuxtConfig({
       compilerOptions: {
         paths: {
           "@/*": ["../*"],
-          "@themeConfig": ["../themeConfig.ts"],
-          "@layouts/*": ["../@layouts/*"],
-          "@layouts": ["../@layouts"],
-          "@core/*": ["../@core/*"],
-          "@core": ["../@core"],
           "@images/*": ["../assets/images/*"],
-          "@styles/*": ["../assets/styles/*"],
-          "@validators": ["../@core/utils/validators"],
-          "@db/*": ["../server/fake-db/*"],
-          "@api-utils/*": ["../server/utils/*"]
+          "@styles/*": ["../assets/styles/*"]
         }
       }
     }

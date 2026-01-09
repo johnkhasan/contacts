@@ -1,2 +1,6 @@
-export * from "./platform";
-export * from "./common";
+// Common types
+export interface Pagination {
+  page: number;
+  limit: number;
+  total: number;
+}

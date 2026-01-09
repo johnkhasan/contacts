@@ -4,20 +4,20 @@ This tool generates TypeScript types and API methods based on a Swagger/OpenAPI 
 
 ### 📋 Steps to Generate
 
-1. **Configure `swaggerUrl`**  
-   - Open your Swagger UI in a browser.  
-   - Press `F12` to open Developer Tools, go to the **Network** tab, and refresh the page.  
-   - Look for a `.json` request (usually the Swagger schema), right-click it, and copy its URL.  
+1. **Configure `swaggerUrl`**
+   - Open your Swagger UI in a browser.
+   - Press `F12` to open Developer Tools, go to the **Network** tab, and refresh the page.
+   - Look for a `.json` request (usually the Swagger schema), right-click it, and copy its URL.
    - Paste the URL into the `swaggerUrl` field inside `config.json`.
 
-2. **Run the generator**  
+2. **Run the generator**
    In your terminal, run one of the following commands:
 
    ```bash
    npm run api-gen
    # or
    node generate.cjs
-
+   ```
 
 ## 📦 Output
 
@@ -30,7 +30,6 @@ Inside the `api` folder, two files will be generated:
 
 These files are ready to use with the `useApiService` composable in your project.
 
-
 ## 🔧 Usage Example
 
 ```vue
@@ -38,3 +37,4 @@ These files are ready to use with the `useApiService` composable in your project
 const { data, error, status } = useApiService().users.getUserList();
 // ...
 </script>
+```

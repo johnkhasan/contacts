@@ -4,9 +4,8 @@ interface LoginForm {
 }
 
 interface selectRoleForm {
-  accountRoleId: number,
-  tempToken: string
+  accountRoleId: number;
+  tempToken: string;
 }
-
 
 export { type LoginForm, type selectRoleForm };

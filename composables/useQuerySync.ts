@@ -1,12 +1,15 @@
 // composables/useQuerySync.ts
-import { ref, watch, toRaw, nextTick } from 'vue';
-import { useRoute, useRouter } from '#imports';
+import { ref, watch, toRaw, nextTick } from "vue";
+import { useRoute, useRouter } from "#imports";
 
 type SyncOptions<T> = {
   keys?: (keyof T & string)[];
 };
 
-export function useQuerySync<T extends Record<string, any>>(params: T, options: SyncOptions<T> = {}) {
+export function useQuerySync<T extends Record<string, any>>(
+  params: T,
+  options: SyncOptions<T> = {}
+) {
   const route = useRoute();
   const router = useRouter();
 
@@ -18,19 +21,19 @@ export function useQuerySync<T extends Record<string, any>>(params: T, options: 
   const syncFromQuery = () => {
     lock.value = true;
 
-    keys.forEach((key) => {
+    keys.forEach(key => {
       const rawVal = route.query[key];
       if (rawVal == null) return;
 
       const baseVal = (initial as any)[key];
       let value: any = Array.isArray(rawVal) ? rawVal[0] : rawVal;
 
-      if (typeof baseVal === 'number') {
+      if (typeof baseVal === "number") {
         const n = Number(value);
         if (!Number.isNaN(n)) value = n;
         else return;
-      } else if (typeof baseVal === 'boolean') {
-        value = value === 'true' || value === '1';
+      } else if (typeof baseVal === "boolean") {
+        value = value === "true" || value === "1";
       }
 
       (params as any)[key] = value;
@@ -47,9 +50,9 @@ export function useQuerySync<T extends Record<string, any>>(params: T, options: 
 
     const newQuery: Record<string, any> = { ...route.query };
 
-    keys.forEach((key) => {
+    keys.forEach(key => {
       const v = (params as any)[key];
-      const isEmpty = v === undefined || v === null || v === '';
+      const isEmpty = v === undefined || v === null || v === "";
 
       if (isEmpty) {
         delete newQuery[key];
@@ -59,7 +62,7 @@ export function useQuerySync<T extends Record<string, any>>(params: T, options: 
     });
 
     router.replace({
-      query: newQuery,
+      query: newQuery
     });
   };
 
@@ -71,14 +74,10 @@ export function useQuerySync<T extends Record<string, any>>(params: T, options: 
     { deep: true }
   );
 
-  watch(
-    params,
-    () => syncToQuery(),
-    { deep: true }
-  );
+  watch(params, () => syncToQuery(), { deep: true });
 
   return {
     syncFromQuery,
-    syncToQuery,
+    syncToQuery
   };
 }
