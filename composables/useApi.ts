@@ -12,9 +12,8 @@ export default function useApi<T>(url: string, baseOptions: any = {}) {
   const accessToken = getAccessToken();
   const headers: Record<string, string> = {
     ...(baseOptions.headers || {}),
-    "accept-language": locale || "uz",
+    "accept-language": locale || "uz"
   };
-
 
   const ignoreList = ["/auth", "/auth/refresh"];
 
@@ -36,7 +35,7 @@ export default function useApi<T>(url: string, baseOptions: any = {}) {
         : response) as T extends void ? unknown : T,
     onResponseError: async ({
       response,
-      options,
+      options
     }: {
       response: any;
       options: any;
@@ -49,7 +48,7 @@ export default function useApi<T>(url: string, baseOptions: any = {}) {
             ...baseOptions.headers,
             ...headers,
             ...options.headers,
-            Authorization: `Bearer ${newAccessToken}`,
+            Authorization: `Bearer ${newAccessToken}`
           };
           window.location.reload();
           return await useApi<T>(url, options);
@@ -60,14 +59,15 @@ export default function useApi<T>(url: string, baseOptions: any = {}) {
     },
     onResponse: async ({
       response,
-      options,
+      options
     }: {
       response: any;
       options: any;
     }) => {
       const message =
         response?._data?.message ?? t("action.dataSuccessfullyUpdated");
-      const isSuccess = response?.status === 200 || response?.status === 201 || false;
+      const isSuccess =
+        response?.status === 200 || response?.status === 201 || false;
 
       if (
         isSuccess &&
@@ -81,20 +81,23 @@ export default function useApi<T>(url: string, baseOptions: any = {}) {
         ElNotification.success({
           title: t("action.success"),
           message: message,
-          duration: 3000,
+          duration: 3000
         });
       }
 
-      if ((response.status === 400 || response.status === 409) && (options.method === "POST" ||
-        options.method === "PUT" ||
-        options.method === "PATCH")) {
+      if (
+        (response.status === 400 || response.status === 409) &&
+        (options.method === "POST" ||
+          options.method === "PUT" ||
+          options.method === "PATCH")
+      ) {
         ElNotification.error({
           title: t("action.error"),
           message: message,
-          duration: 3000,
+          duration: 3000
         });
       }
-    },
+    }
   };
   return useFetch<T>(url, fetchOptions);
 }

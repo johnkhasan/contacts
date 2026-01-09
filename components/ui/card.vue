@@ -1,9 +1,13 @@
 <template>
-  <div class="w-full p-2 flex flex-col gap-2 bg-surface-50 border border-surface-30 shadow-card rounded-lg">
+  <div
+    class="w-full p-2 flex flex-col gap-2 bg-surface-50 border border-surface-30 shadow-card rounded-lg"
+  >
     <span class="text-primary-color font-semibold text-sm py-1">
       <slot name="title" />
     </span>
-    <div class="flex gap-4 justify-between bg-surface-40 border border-surface-30 p-2 rounded-lg items-center">
+    <div
+      class="flex gap-4 justify-between bg-surface-40 border border-surface-30 p-2 rounded-lg items-center"
+    >
       <div class="flex flex-col gap-1">
         <div class="flex gap-2 items-center">
           <div>
@@ -32,12 +36,10 @@
 
 <script setup lang="ts">
 // No script logic needed for this component as it uses slots for dynamic content
-defineProps(
-  {
-    hasIcon: {
-      type: Boolean,
-      default: true,
-    },
+defineProps({
+  hasIcon: {
+    type: Boolean,
+    default: true
   }
-);
+});
 </script>

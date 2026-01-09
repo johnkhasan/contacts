@@ -1,7 +1,9 @@
 {
-  "name": "ai-front",
+  "name": "nuxt-template",
   "private": true,
   "type": "module",
+  "version": "0.0.1",
+  "description": "Clean Nuxt 3 Template",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",

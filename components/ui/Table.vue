@@ -7,8 +7,13 @@
         </template>
       </el-table-column>
 
-      <el-table-column v-for="column in columns" :key="column.prop" :prop="column.prop" :label="column.label"
-        :width="column.width">
+      <el-table-column
+        v-for="column in columns"
+        :key="column.prop"
+        :prop="column.prop"
+        :label="column.label"
+        :width="column.width"
+      >
         <template #default="scope">
           <slot :name="column.prop" v-bind="scope">
             {{ scope.row[column.prop] }}
@@ -16,45 +21,67 @@
         </template>
       </el-table-column>
 
-      <el-table-column v-if="actions && showAnyAction" :label="$t('action.plural')" :width="actions.width || 100"
-        fixed="right">
+      <el-table-column
+        v-if="actions && showAnyAction"
+        :label="$t('action.plural')"
+        :width="actions.width || 100"
+        fixed="right"
+      >
         <template #default="{ row }">
           <div class="flex items-center gap-2">
-            <button v-if="actions.view" @click="$emit('view', row)"
+            <button
+              v-if="actions.view"
+              @click="$emit('view', row)"
               class="!w-10 !h-10 flex items-center justify-center rounded-full border border-surface-30"
-              v-can="props.permissions?.view">
+              v-can="props.permissions?.view"
+            >
               <el-icon class="w-8 h-8 text-primary-color">
                 <View />
               </el-icon>
             </button>
 
-            <button v-if="actions.edit" @click="$emit('edit', row)"
+            <button
+              v-if="actions.edit"
+              @click="$emit('edit', row)"
               class="!w-10 !h-10 flex items-center justify-center rounded-full border border-surface-30"
-              v-can="props.permissions?.edit">
+              v-can="props.permissions?.edit"
+            >
               <IconEdit class="w-4 h-4 text-primary-color" />
             </button>
 
-            <button v-if="actions.assign" @click="$emit('assign', row)"
+            <button
+              v-if="actions.assign"
+              @click="$emit('assign', row)"
               class="!w-10 !h-10 flex items-center justify-center rounded-full border border-surface-30"
-              v-can="props.permissions?.assign">
+              v-can="props.permissions?.assign"
+            >
               <IconUserAdd class="w-4 h-4 text-primary-color" />
             </button>
 
-            <button v-if="actions.delete" @click="$emit('delete', row)"
+            <button
+              v-if="actions.delete"
+              @click="$emit('delete', row)"
               class="!w-10 !h-10 flex items-center justify-center rounded-full border border-surface-30"
-              v-can="props.permissions?.delete">
+              v-can="props.permissions?.delete"
+            >
               <IconTrash class="w-4 h-4 text-primary-color" />
             </button>
 
-            <button v-if="actions.download" @click="$emit('download', row)"
+            <button
+              v-if="actions.download"
+              @click="$emit('download', row)"
               class="!w-10 !h-10 flex items-center justify-center rounded-full border border-surface-30"
-              v-can="props.permissions?.download">
+              v-can="props.permissions?.download"
+            >
               <IconDownload class="w-4 h-4 text-primary-color" />
             </button>
 
-            <button v-if="actions.video && row.videoUrl" @click="$emit('video', row)"
+            <button
+              v-if="actions.video && row.videoUrl"
+              @click="$emit('video', row)"
               class="!w-10 !h-10 flex items-center justify-center rounded-full border border-surface-30"
-              v-can="props.permissions?.video">
+              v-can="props.permissions?.video"
+            >
               <VideoCamera class="w-4 h-4 text-primary-color" />
             </button>
           </div>
@@ -68,79 +95,78 @@
 </template>
 
 <script setup lang="ts" generic="Row extends Record<string, any>">
-import { computed } from 'vue'
-import { IconDownload } from '#components'
-import { VideoCamera, View } from '@element-plus/icons-vue'
-import type { PermissionKey } from '@/types';
+import { computed } from "vue";
+import { IconDownload } from "#components";
+import { VideoCamera, View } from "@element-plus/icons-vue";
+import type { PermissionKey } from "@/types";
 
 interface Column<Row> {
-  prop: keyof Row & string | string
-  label: string
-  width?: number
+  prop: (keyof Row & string) | string;
+  label: string;
+  width?: number;
 }
 
 interface Actions {
-  view?: boolean
-  edit?: boolean
-  delete?: boolean
-  download?: boolean
-  assign?: boolean
-  width?: number
-  video?: boolean
+  view?: boolean;
+  edit?: boolean;
+  delete?: boolean;
+  download?: boolean;
+  assign?: boolean;
+  width?: number;
+  video?: boolean;
 }
 
 interface Permissions {
-  view?: PermissionKey[],
-  edit?: PermissionKey[],
-  delete?: PermissionKey[],
-  download?: PermissionKey[],
-  assign?: PermissionKey[]
-  video?: PermissionKey[]
+  view?: PermissionKey[];
+  edit?: PermissionKey[];
+  delete?: PermissionKey[];
+  download?: PermissionKey[];
+  assign?: PermissionKey[];
+  video?: PermissionKey[];
 }
 
 type Props<Row> = {
-  data?: Row[]
-  columns: Array<Column<Row>>
-  actions?: Actions
-  permissions?: Permissions
-  page?: number
-  size?: number
-  indexWidth?: number
-}
+  data?: Row[];
+  columns: Array<Column<Row>>;
+  actions?: Actions;
+  permissions?: Permissions;
+  page?: number;
+  size?: number;
+  indexWidth?: number;
+};
 
 const props = withDefaults(defineProps<Props<Row>>(), {
   page: 1,
   size: 10,
   actions: undefined,
   indexWidth: 50
-})
+});
 
 type TableSlotScope<Row> = {
-  row: Row
-  column: Column<Row>
-  $index: number
-}
+  row: Row;
+  column: Column<Row>;
+  $index: number;
+};
 
 // 🔥 typed slots: any slot name gets { row, column, $index }
 defineSlots<{
-  [name: string]: (scope: TableSlotScope<Row>) => any
-}>()
+  [name: string]: (scope: TableSlotScope<Row>) => any;
+}>();
 
 // optional but recommended: typed emits
 const emit = defineEmits<{
-  (e: 'view', row: Row): void
-  (e: 'edit', row: Row): void
-  (e: 'delete', row: Row): void
-  (e: 'download', row: Row): void
-  (e: 'assign', row: Row): void
-  (e: 'video', row: Row): void
-}>()
+  (e: "view", row: Row): void;
+  (e: "edit", row: Row): void;
+  (e: "delete", row: Row): void;
+  (e: "download", row: Row): void;
+  (e: "assign", row: Row): void;
+  (e: "video", row: Row): void;
+}>();
 
 const showAnyAction = computed(
   () => props.actions && Object.values(props.actions).some(x => x === true)
-)
+);
 </script>
-
 
 <style lang="css">
 :root {
@@ -174,10 +200,10 @@ const showAnyAction = computed(
 }
 
 .el-table--enable-row-transition .el-table__body td.el-table__cell {
-  @apply !bg-surface-40
+  @apply !bg-surface-40;
 }
 
 .hover-row {
-  @apply !bg-surface-40
+  @apply !bg-surface-40;
 }
 </style>

@@ -1,5 +1,8 @@
 <template>
-  <div class="min-h-[25px] inline-flex items-center py-1 px-2 rounded border" :class="[color]">
+  <div
+    class="min-h-[25px] inline-flex items-center py-1 px-2 rounded border"
+    :class="[color]"
+  >
     {{ title }}
   </div>
 </template>

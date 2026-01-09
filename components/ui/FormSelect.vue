@@ -6,7 +6,12 @@
       </div>
     </template>
 
-    <el-option v-for="(item, index) in options" :key="index" :label="item.label" :value="item.value" />
+    <el-option
+      v-for="(item, index) in options"
+      :key="index"
+      :label="item.label"
+      :value="item.value"
+    />
   </el-select>
 </template>
 
@@ -17,43 +22,42 @@ type SelectOption = {
 };
 
 interface ElSelectProps {
-  multiple?: boolean
-  disabled?: boolean
-  valueKey?: string
-  size?: 'large' | 'default' | 'small'
-  clearable?: boolean
-  collapseTags?: boolean
-  collapseTagsTooltip?: boolean
-  multipleLimit?: number
-  name?: string
-  effect?: 'light' | 'dark'
-  autocomplete?: string
-  placeholder?: string
-  filterable?: boolean
-  allowCreate?: boolean
-  remote?: boolean
-  remoteMethod?: (query: string) => void
-  loading?: boolean
-  loadingText?: string
-  noMatchText?: string
-  noDataText?: string
-  popperClass?: string
-  reserveKeyword?: boolean
-  defaultFirstOption?: boolean
-  teleported?: boolean
-  persistent?: boolean
-  automaticDropdown?: boolean
-  clearIcon?: string | Component
-  fitInputWidth?: boolean,
-  options: SelectOption[],
-  icon: object,
+  multiple?: boolean;
+  disabled?: boolean;
+  valueKey?: string;
+  size?: "large" | "default" | "small";
+  clearable?: boolean;
+  collapseTags?: boolean;
+  collapseTagsTooltip?: boolean;
+  multipleLimit?: number;
+  name?: string;
+  effect?: "light" | "dark";
+  autocomplete?: string;
+  placeholder?: string;
+  filterable?: boolean;
+  allowCreate?: boolean;
+  remote?: boolean;
+  remoteMethod?: (query: string) => void;
+  loading?: boolean;
+  loadingText?: string;
+  noMatchText?: string;
+  noDataText?: string;
+  popperClass?: string;
+  reserveKeyword?: boolean;
+  defaultFirstOption?: boolean;
+  teleported?: boolean;
+  persistent?: boolean;
+  automaticDropdown?: boolean;
+  clearIcon?: string | Component;
+  fitInputWidth?: boolean;
+  options: SelectOption[];
+  icon: object;
 }
-
 
 const props = withDefaults(defineProps<ElSelectProps>(), {
   clearable: true,
-  collapseTags: true,
-})
+  collapseTags: true
+});
 
 const model = defineModel<string | number | number[] | string[]>();
 </script>

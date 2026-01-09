@@ -1,6 +1,12 @@
 <template>
-  <el-date-picker v-model="model" :prefix-icon="icon" format="DD-MM-YYYY" clearable
-    :start-placeholder="$t('common.startDate')" :end-placeholder="$t('common.endDate')">
+  <el-date-picker
+    v-model="model"
+    :prefix-icon="icon"
+    format="DD-MM-YYYY"
+    clearable
+    :start-placeholder="$t('common.startDate')"
+    :end-placeholder="$t('common.endDate')"
+  >
   </el-date-picker>
 </template>
 
@@ -36,7 +42,7 @@ const model = defineModel<any>();
   @apply w-auto gap-2 text-xl;
 }
 
-.el-input__prefix-inner> :last-child {
+.el-input__prefix-inner > :last-child {
   @apply mr-0;
 }
 
