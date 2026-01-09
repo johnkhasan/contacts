@@ -19,6 +19,7 @@ const isDarkMode = ref(
     !localStorage.getItem("theme"))
 );
 
+
 watchEffect(() => {
   if (isDarkMode.value) {
     document.documentElement.classList.add("dark");
