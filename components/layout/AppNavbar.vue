@@ -6,7 +6,13 @@
       <span class="font-bold text-lg">{{ pageTitle }}</span>
     </div>
     <div class="flex items-center gap-4">
-      <!-- Navbar items -->
+      <button
+        @click="toggleTheme"
+        class="p-2 rounded-lg hover:bg-surface-30 transition-colors"
+      >
+        <span v-if="isDark">🌞</span>
+        <span v-else>🌙</span>
+      </button>
     </div>
   </div>
 </template>
@@ -14,4 +20,5 @@
 <script setup lang="ts">
 const route = useRoute();
 const pageTitle = computed(() => route.meta.title || "Dashboard");
+const { isDark, toggleTheme } = useTheme();
 </script>
