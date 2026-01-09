@@ -36,9 +36,9 @@
             </button>
           </el-form>
 
-          <el-form :rules="selectRoleFormRules" ref="selectRoleFormRef" :model="selectRoleFormData"
+          <!-- <el-form :rules="selectRoleFormRules" ref="selectRoleFormRef" :model="selectRoleFormData"
             v-else-if="isUserSelectsRole && !isUserHaveOneRole">
-            <el-form-item :label="$t('auth.username')" label-position="top" prop="login">
+            <el-form-item :label="$t('auth.username')" label-position="top" prop="accountRoleId">
               <el-select v-model="selectRoleFormData.accountRoleId" :placeholder="$t('auth.selectRole')" class="w-full">
                 <el-option v-for="role in userRolesList" :key="role.id" :label="role.role.name" :value="role.id" />
               </el-select>
@@ -48,7 +48,7 @@
               class="w-full py-2 px-4 rounded-lg mt-[22px] h-10 bg-info-100 text-white font-bold text-sm">
               {{ $t('auth.login') }}
             </button>
-          </el-form>
+          </el-form> -->
         </div>
       </div>
     </div>
@@ -56,126 +56,272 @@
 </template>
 
 <script setup lang="ts">
+
 import { IconUserProfile, IconLockOpen } from "#components";
+
 import Cookies from "js-cookie";
+
 import type { LoginForm, selectRoleForm } from "@/types";
+
 import { ElNotification, type ElForm, type FormRules } from "element-plus";
+
 import type { components } from "@/api/apiMethods.types"
+
 import { SystemType } from "@/store/main";
+
 import { platformRoutes } from "@/constants";
+
+import { usePermissionStore } from '@/store/permissionsStore'
+
+
+
 // AccountRoleDto
+
 type AccountRoleDto = components['schemas']['AccountRoleDto']
+
+
 
 const router = useRouter();
 
+const permissionStore = usePermissionStore()
+
+const { setUserInfo, setPermissions } = permissionStore
+
+
+
 const formRef = ref<InstanceType<typeof ElForm> | null>(null);
+
 const selectRoleFormRef = ref<InstanceType<typeof ElForm> | null>(null);
 
+
+
 const isUserSelectsRole = ref<boolean>(false);
+
 const isUserHaveOneRole = ref<boolean>(false);
+
 const loading = ref<boolean>(false);
+
 const formRules: FormRules = {
+
   login: [
+
     { required: true, message: "", trigger: "blur" }
+
   ],
+
   password: [
+
     { required: true, message: "", trigger: "blur" }
+
   ]
+
 };
+
+
 
 const selectRoleFormRules: FormRules = {
+
   accountRoleId: [
+
     { required: true, message: "", trigger: "change" }
+
   ],
+
   tempToken: [
+
     { required: true, message: "", trigger: "blur" }
+
   ]
+
 };
+
 const userRolesList = ref<AccountRoleDto[]>([])
 
+
+
 const form = reactive<LoginForm>({
+
   login: "",
+
   password: ""
+
 });
+
+
 
 const selectRoleFormData = reactive<selectRoleForm>({
+
   accountRoleId: null as unknown as number,
+
   tempToken: ""
+
 });
 
+
+
 const submit = async () => {
+
   if (!formRef.value) return;
 
+
+
   await formRef.value.validate();
+
   loading.value = true;
+
   const { data: anyData, error } = await useApiService().Auth.login(form)
 
+
+
   userRolesList.value = anyData.value?.accountRoles || [];
+
   selectRoleFormData.tempToken = anyData.value?.tempToken || "";
 
+
+
   if (error.value) {
+
     isUserSelectsRole.value = false
+
     ElNotification.error({
+
       title: 'Error',
+
       message: error.value.data.message,
+
     });
+
   } else {
+
     if (anyData.value?.accountRoles.length === 1) {
+
       isUserHaveOneRole.value = true
+
       isUserSelectsRole.value = false
 
+
+
       const { data: tokens } = await useApiService().Auth.selectRole({
+
         accountRoleId: anyData.value?.accountRoles[0].id,
+
         tempToken: anyData.value?.tempToken
+
       })
 
+
+
       if (tokens.value?.access && tokens.value?.refresh) {
+
         Cookies.set("access_token", tokens.value?.access, { expires: 7 });
+
         Cookies.set("refresh_token", tokens.value?.refresh, { expires: 7 });
+
         Cookies.set("systems", String(tokens.value?.systems), { expires: 7 });
 
-        router.push('/');
+
+
+        const { data: userData } = await useApiService({}).Account.AccountController_getMe()
+
+        if (userData.value) {
+
+          setUserInfo(userData.value)
+
+          setPermissions(userData.value.accountRole?.role?.permissions || [])
+
+        }
+
+        router.push(getFirstAllowedRoute(tokens.value.systems));
+
       }
+
     } else {
+
       isUserSelectsRole.value = true
+
       isUserHaveOneRole.value = false
+
     }
+
   }
+
   loading.value = false;
+
 };
+
+
 
 const confirmRole = async () => {
+
   if (!selectRoleFormRef.value) return;
 
+
+
   try {
+
     await selectRoleFormRef.value.validate();
 
+
+
     const { data: tokens, error } = await useApiService().Auth.selectRole({
+
       accountRoleId: selectRoleFormData.accountRoleId,
+
       tempToken: selectRoleFormData.tempToken
+
     })
+
     if (tokens.value?.access && tokens.value?.refresh) {
+
       Cookies.set("access_token", tokens.value?.access, { expires: 7 });
+
       Cookies.set("refresh_token", tokens.value?.refresh, { expires: 7 });
+
       Cookies.set("systems", String(tokens.value?.systems), { expires: 7 });
 
-      router.push('/');
+
+
+      const { data: userData } = await useApiService({}).Account.AccountController_getMe()
+
+      if (userData.value) {
+
+        setUserInfo(userData.value)
+
+        setPermissions(userData.value.accountRole?.role?.permissions || [])
+
+      }
+
+      router.push(getFirstAllowedRoute(tokens.value.systems));
+
     }
+
   } catch (error) {
 
+
+
   }
+
 };
+
+
 
 const hasPermission = (systems: number, required: SystemType) =>
+
   (systems & required) === required;
 
-const getFirstAllowedRoute = (systems: number) => {
-  const route = platformRoutes.find(r =>
-    hasPermission(systems, r.permission)
-  );
-  return route?.route ?? "/";
-};
 
+
+const getFirstAllowedRoute = (systems: number) => {
+
+  const route = platformRoutes.find(r =>
+
+    hasPermission(systems, r.permission)
+
+  );
+
+  return route?.route ?? "/";
+
+};
 
 </script>
 
