@@ -1,9 +1,5 @@
 <template>
   <div class="w-screen h-screen p-4 relative">
-    <img class="absolute -top-[37px] -left-4 z-50" :src="AuthTopLeft" :alt="AuthTopLeft" />
-    <img class="absolute -top-[63px] -right-12 z-50" :src="AuthTopRight" :alt="AuthTopRight" />
-    <img class="absolute -bottom-[37px] -left-[63px] z-50" :src="AuthBottomLeft" :alt="AuthBottomLeft" />
-    <img class="absolute -bottom-[19px] right-0 z-50" :src="AuthBottomRight" :alt="AuthBottomRight" />
     <div
       class="p-4 border h-full w-full bg-radial-auth dark:bg-dark-radial-auth flex flex-col gap-10 justify-center items-center rounded-2xl">
       <img :src="ErrorImage" :alt="ErrorImage" />
@@ -24,10 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import AuthTopLeft from "~/assets/images/auth-top-left.png"
-import AuthTopRight from "~/assets/images/auth-top-right.png"
-import AuthBottomLeft from "~/assets/images/auth-bottom-left.png"
-import AuthBottomRight from "~/assets/images/auth-bottom-right.png"
 import ErrorImage from "~/assets/images/404.png"
 
 import { platformRoutes } from "@/constants";

@@ -4,7 +4,7 @@ import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 
 export default defineNuxtConfig({
-  devtools: { enabled: false },
+  devtools: { enabled: true },
 
   app: {
     head: {
@@ -186,3 +186,4 @@ export default defineNuxtConfig({
 
   compatibilityDate: "2025-11-07"
 });
+

@@ -1,75 +1,86 @@
-# Nuxt Minimal Starter
+# Project Template Usage Guide
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+This repository is designed to be used as a template for new Nuxt.js projects. Follow these steps to set up a new project based on this template.
 
-## Setup
+## Prerequisites
 
-Make sure to install dependencies:
+- Node.js (Latest LTS version recommended) -> check `package.json` for engine requirements if any.
+- npm or pnpm or yarn
+
+## Getting Started
+
+### 1. Clone the Template
+
+Clone this repository into a new directory for your project:
 
 ```bash
-# npm
+git clone <repository-url> my-new-project
+cd my-new-project
+```
+
+### 2. Clean Up
+
+Remove the existing git history to start fresh:
+
+```bash
+rm -rf .git
+```
+
+Initialize a new git repository:
+
+```bash
+git init
+```
+
+### 3. Environment Setup
+
+Copy the example environment file:
+
+```bash
+cp .env.example .env
+```
+
+Update `.env` with your specific configuration values (e.g., API URL).
+
+### 4. Install Dependencies
+
+Install the project dependencies:
+
+```bash
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
+# or
 yarn install
-
-# bun
-bun install
+# or
+pnpm install
 ```
 
-## Development Server
+### 5. Run Development Server
 
-Start the development server on `http://localhost:3000`:
+Start the development server:
 
 ```bash
-# npm
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+The application should be running at `http://localhost:3000` (or the port specified in your terminal).
 
-Build the application for production:
+## Project Structure
 
-```bash
-# npm
-npm run build
+- `components/`: Vue components.
+- `pages/`: Application pages/routes.
+- `layouts/`: Page layouts.
+- `store/`: Pinia stores.
+- `composables/`: Auto-imported Vue composables.
+- `server/`: Server-side logic (if any).
+- `assets/`: Static assets (CSS, images).
+- `public/`: Publicly served files.
 
-# pnpm
-pnpm build
+## Customization
 
-# yarn
-yarn build
+- **Project Name**: Update `name` in `package.json`.
+- **Nuxt Config**: Modify `nuxt.config.ts` for modules and build settings.
+- **Tailwind**: Update `tailwind.config.js` for custom themes.
 
-# bun
-bun run build
-```
+## License
 
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+[Insert License Information Here]
