@@ -231,7 +231,7 @@ const submit = async () => {
 
         }
 
-        router.push(getFirstAllowedRoute(tokens.value.systems));
+        router.push('/');
 
       }
 
@@ -291,7 +291,7 @@ const confirmRole = async () => {
 
       }
 
-      router.push(getFirstAllowedRoute(tokens.value.systems));
+      router.push('/');
 
     }
 
