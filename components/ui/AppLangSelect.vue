@@ -12,7 +12,11 @@
 
     <template #dropdown>
       <el-dropdown-menu>
-        <el-dropdown-item v-for="(item, key) in flags" :key="key" @click="setLang(item.code)">
+        <el-dropdown-item
+          v-for="(item, key) in flags"
+          :key="key"
+          @click="setLang(item.code)"
+        >
           <div class="flex items-center gap-2">
             <img :src="item.flag" :alt="flags[lang]?.code" class="w-5 h-5" />
 
@@ -65,9 +69,9 @@ const flags: Record<LangCodeEnum, Flag> = {
 
 const setLang = async (code: LangCodeEnum) => {
   setLocale(code);
-  await setLocale(code)
+  await setLocale(code);
   if (process.client) {
-    localStorage.setItem('lang', code)
+    localStorage.setItem("lang", code);
   }
 };
 </script>

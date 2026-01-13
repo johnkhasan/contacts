@@ -1,6 +1,12 @@
 <template>
-  <el-date-picker v-model="model" :prefix-icon="icon" :placeholder="placeholder" value-format="DD-MM-YYYY"
-    format="DD-MM-YYYY" clearable>
+  <el-date-picker
+    v-model="model"
+    :prefix-icon="icon"
+    :placeholder="placeholder"
+    value-format="DD-MM-YYYY"
+    format="DD-MM-YYYY"
+    clearable
+  >
   </el-date-picker>
 </template>
 
@@ -37,7 +43,7 @@ const model = defineModel<string>();
   @apply w-auto gap-2 text-xl;
 }
 
-.el-input__prefix-inner> :last-child {
+.el-input__prefix-inner > :last-child {
   @apply mr-0;
 }
 

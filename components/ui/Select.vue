@@ -4,7 +4,12 @@
       <PrefixIcon :icon="icon" />
     </template>
 
-    <el-option v-for="(item, index) in options" :key="index" :label="item.label" :value="item.value" />
+    <el-option
+      v-for="(item, index) in options"
+      :key="index"
+      :label="item.label"
+      :value="item.value"
+    />
   </el-select>
 </template>
 
