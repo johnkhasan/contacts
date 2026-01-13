@@ -7,6 +7,8 @@
         <AppNavbar />
 
         <NuxtPage />
+
+        <AppFooter />
       </div>
     </div>
   </div>

@@ -34,14 +34,14 @@
 <script setup lang="ts">
 import type { Component } from 'vue';
 
-export interface SegmentedRadioOption {
+export interface AppSegmentedTabsOption {
   label: string;
   value: string | number;
   icon: Component;
 }
 
 interface Props {
-  options: SegmentedRadioOption[];
+  options: AppSegmentedTabsOption[];
   modelValue: string | number;
   color?: 'blue' | 'primary';
 }
